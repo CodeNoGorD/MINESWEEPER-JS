@@ -33,7 +33,20 @@
     </nav>
 </header>
 <main>
-    <h1>DEMINEUR</h1>
+    <h1 class="text-center bold my-3">BIENVENUE DANS LE JEU DEMINEUR :</h1>
+
+    <form action="" method="GET" class="d-flex flex-column w-75 mx-auto">
+        <label for="pseudo" class="form-label">PSEUDO</label>
+        <input type="text" name="pseudo" id="pseudo" placeholder="Veuillez saisir votre pseudo" class="form-control"/>
+        <h2 class="my-3">TAILLE DE LA GRILLE</h2>
+        <label for="rows" class="form-label">NOMBRE DE LIGNES</label>
+        <input type="number" name="rows" id="rows" value="3" placeholder="Veuillez préciser le nombre de lignes" class="form-control"/>
+        <label for="cols" class="form-label">NOMBRE DE COLONNES</label>
+        <input type="number" name="cols" id="cols" value="3" placeholder="Veuillez préciser le nombre de colonnes" class="form-control"/>
+        <label for="mines" class="form-label">NOMBRE DE MINES</label>
+        <input type="number" name="mines" id="mines" value="1" placeholder="Veuillez préciser le nombre de mines" class="form-control"/>
+        <button class="btn btn-success my-3 w-25">VALIDER</button>
+    </form>
 
 </main>
 
