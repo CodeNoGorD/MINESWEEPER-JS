@@ -1,0 +1,2 @@
+## CONVENTION D'ECRITURE
+camelCase
