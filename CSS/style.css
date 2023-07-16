@@ -3,3 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+.form-area{
+    height: 75vh;
+    display: grid;
+    place-items: center;
+}
