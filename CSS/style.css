@@ -3,9 +3,12 @@
     margin: 0;
     box-sizing: border-box;
 }
+li{
+    list-style: none;
+}
 
 .form-area{
-    height: 75vh;
+    min-height: 75vh;
     display: grid;
     place-items: center;
 }
