@@ -1,7 +1,11 @@
 'use strict';
+import {Player} from "./Player.js";
+import {Tools} from "./Tools.js";
+
 window.addEventListener('load', () => {
 
     const formArea = document.querySelector('.form-area');
+    const gridArea = document.querySelector('.grid-area');
     const pseudo = document.querySelector('#pseudo');
     const rows = document.querySelector('#rows');
     const cols = document.querySelector('#cols');
@@ -35,9 +39,10 @@ window.addEventListener('load', () => {
                 console.error('Erreur de connexion à l\'API');
             }
         }
-
         drawArea(gameDatas) {
             console.dir(gameDatas);
+            Tools.dataToHTML(gameDatas);
+
         }
     }
 
@@ -46,6 +51,9 @@ window.addEventListener('load', () => {
         let game = new Game(rows.value, cols.value, mines.value);
         let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
         rows=${rows.value}&cols=${cols.value}&mines=${mines.value}`);
+        formArea.classList.add('d-none');
+        gridArea.classList.remove('d-none');
+        gridArea.classList.add('d-block');
         game.drawArea(gameDatas);
     });
 

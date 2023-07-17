@@ -1,6 +1,6 @@
 'use strict';
 
-class Player {
+export class Player {
     constructor(pseudo) {
         this.pseudo = pseudo;
     }
