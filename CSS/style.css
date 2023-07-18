@@ -20,8 +20,12 @@ li {
 }
 
 .square {
+    cursor: pointer;
     width: 100px;
     height: 100px;
     background-color: #1d8a7b;
     border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
