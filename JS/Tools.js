@@ -23,7 +23,7 @@ export class Tools {
 
     static checkMines(arr, row, col, nbRows, nbCols) {
         let mines = 0;
-        let count = 0;
+
         // GESTION DU CENTRE
         if (arr[row - 1] != undefined && arr[row + 1] != undefined
             && arr[row][col - 1] != undefined && arr[row][col + 1] != undefined) {
@@ -76,6 +76,23 @@ export class Tools {
             }
         }
 
+        // GESTION DES COTES
+        if (arr[row - 1] != undefined && arr[row + 1] != undefined) {
+            if (arr[row][col - 1] == undefined) {
+                arr[row - 1][col] == -1 ? mines++ : '';
+                arr[row - 1][col + 1] == -1 ? mines++ : '';
+                arr[row][col + 1] == -1 ? mines++ : '';
+                arr[row + 1][col + 1] == -1 ? mines++ : '';
+                arr[row + 1][col] == -1 ? mines++ : '';
+            }
+            if (arr[row][col + 1] == undefined) {
+                arr[row - 1][col] == -1 ? mines++ : '';
+                arr[row - 1][col - 1] == -1 ? mines++ : '';
+                arr[row][col - 1] == -1 ? mines++ : '';
+                arr[row + 1][col - 1] == -1 ? mines++ : '';
+                arr[row + 1][col] == -1 ? mines++ : '';
+            }
+        }
         return mines;
     }
 
@@ -83,7 +100,7 @@ export class Tools {
 
         datas.forEach((row, rowIndex) => {
             row.forEach((col, colIndex) => {
-                if (col === 0) {
+                if (col != - 1) {
                     let nbrMines = Tools.checkMines(datas, rowIndex, colIndex, nbRows, nbCols);
                     if (nbrMines > 0) {
                         datas[rowIndex][colIndex] += nbrMines;
