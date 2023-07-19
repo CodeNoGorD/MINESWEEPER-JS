@@ -12,6 +12,8 @@ window.addEventListener('load', () => {
     const cols = document.querySelector('#cols');
     const mines = document.querySelector('#mines');
     const btnStart = document.querySelector('#btn-submit');
+    const resultBoard = document.querySelector('.resultBoard');
+    const resultText = document.querySelector('.resultText');
     let GAMEOVER = false;
 
     class Game {
@@ -38,6 +40,13 @@ window.addEventListener('load', () => {
         drawArea(gameDatas) {
             console.table(gameDatas);
             Tools.dataToHTML(gameDatas);
+        }
+        static endGame(bool) {
+            if (bool == true) {
+                resultBoard.classList.remove('d-none');
+                resultBoard.classList.add('d-block');
+                resultText.innerText = 'VOUS FEREZ MIEUX UNE PROCHAINE FOIS... ';
+            }
         }
     }
 
@@ -77,7 +86,7 @@ window.addEventListener('load', () => {
 
         if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1) {
             e.target.classList.remove('square-hidden');
-            e.target.style.background = '#9c9a9a';
+            e.target.style.background = '#5947d5';
             // console.log(e.target.dataset.rowIndex);
             // console.log(e.target.dataset.colIndex);
             e.target.innerText = e.target.dataset.value;
@@ -86,6 +95,7 @@ window.addEventListener('load', () => {
             e.target.style.backgroundImage = "url(/public/img/mine2.png)";
             GAMEOVER = true;
             console.log('GAMEOVER');
+            Game.endGame(GAMEOVER);
         }
     });
 });
