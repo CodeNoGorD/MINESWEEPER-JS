@@ -15,6 +15,7 @@ window.addEventListener('load', () => {
     const resultBoard = document.querySelector('.resultBoard');
     const resultImage = document.querySelector('.resultImage');
     const resultText = document.querySelector('.resultText');
+    const restartButton = document.querySelector('.restartButton');
     let GAMEOVER = false;
 
     class Game {
@@ -47,19 +48,27 @@ window.addEventListener('load', () => {
 
         static endGame(bool) {
             if (bool == true) {
-                resultImage.src = './public/img/alien.png';
-                resultImage.style.width = '200px';
-                resultImage.position = 'absolute';
-                resultImage.style.top = '100px';
-                resultImage.style.left = '100px';
                 resultBoard.classList.remove('d-none');
                 resultBoard.classList.add('d-flex');
-                resultText.innerText = 'VOUS FEREZ MIEUX UNE PROCHAINE FOIS... ';
+                resultText.innerText = `PERDU: VOUS FEREZ MIEUX LA PROCHAINE FOIS ${pseudo.value.toUpperCase()} ...`;
+                gridArea.style.pointerEvents = 'none';
+                restartButton.addEventListener('click', () => {
+                    gridArea.style.pointerEvents = 'auto';
+                    formArea.classList.remove('d-none');
+                    formArea.classList.add('d-block');
+                    resultBoard.classList.remove('d-flex');
+                    resultBoard.classList.add('d-none');
+                    title.classList.remove('d-block');
+                    title.classList.add('d-none');
+                    while (gridArea.hasChildNodes()) {
+                        gridArea.removeChild(gridArea.firstChild);
+                    }
+                });
             }
         }
     }
 
-    // EVENT LISTENER DU BOUTTON FORMULAIRE
+    // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {
         e.preventDefault();
         // CREATION DU JEU
@@ -82,28 +91,26 @@ window.addEventListener('load', () => {
         let savedData = JSON.parse(JSON.stringify(reversedDatas));
         console.dir(savedData);
 
-        // INSCRIRE LES VALEURS AUTOURS DES BOMBES DANS LE TABLEAU
+        // INSCRIRE LES VALEURS DANS LE TABLEAU
         let filledDatas = Tools.fillDatas(savedData, game.rows, game.cols);
         console.dir(filledDatas);
         // DESSINER LA GRILLE
         game.drawArea(filledDatas);
     });
 
-    // EVENT LISTENER DE LA GRILLE
+
+    // INTERACTION AVEC LA GRILLE
     gridArea.addEventListener('click', (e) => {
         let count = 0;
 
         if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1) {
             e.target.classList.remove('square-hidden');
             e.target.style.background = '#5947d5';
-            // console.log(e.target.dataset.rowIndex);
-            // console.log(e.target.dataset.colIndex);
             e.target.innerText = e.target.dataset.value;
         }
         if (e.target.dataset.value == -1) {
             e.target.style.backgroundImage = "url(/public/img/mine2.png)";
             GAMEOVER = true;
-            console.log('GAMEOVER');
             Game.endGame(GAMEOVER);
         }
     });

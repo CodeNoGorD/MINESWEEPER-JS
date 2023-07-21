@@ -37,23 +37,42 @@ li {
     border: 2px solid #f0ecec;
 }
 .resultBoard {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #ff8888;
-    width: 75vw;
-    height: 75vh;
+    width: 60vw;
+    height: 50vh;
     border: 5px solid black;
     border-radius: 5rem;
 }
+.resultImage {
+    margin: 0.5rem 0;
+    justify-self: start;
+}
+
 .resultText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: black;
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0 1rem;
+}
+.restartButton{
+    padding: 0.5em;
+    display: block;
+    margin: 0.5rem auto;
+    width: 10rem;
+    background: #206b62;
+    color: white;
+    border: 5px solid #313030;
+    border-radius: 3rem;
+    transition: all 0.5s;
+    font-size: 0.9rem;
+}
+.restartButton:hover{
+    border: 5px solid white;
+    transform: translateY(2px);
 }

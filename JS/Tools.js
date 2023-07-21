@@ -117,6 +117,7 @@ export class Tools {
         gameDatas.forEach((row, rowIndex) => {
             let line = document.createElement('div');
             line.classList.add('d-flex');
+            line.classList.add('line');
             row.forEach((col, colIndex) => {
                 let square = document.createElement('div');
                 square.classList.add('square', 'square-hidden');
