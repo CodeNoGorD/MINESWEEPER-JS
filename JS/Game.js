@@ -13,6 +13,7 @@ window.addEventListener('load', () => {
     const mines = document.querySelector('#mines');
     const btnStart = document.querySelector('#btn-submit');
     const resultBoard = document.querySelector('.resultBoard');
+    const resultImage = document.querySelector('.resultImage');
     const resultText = document.querySelector('.resultText');
     let GAMEOVER = false;
 
@@ -22,6 +23,7 @@ window.addEventListener('load', () => {
             this.cols = cols;
             this.mines = mines;
         }
+
         getDatas(url) {
             try {
                 let datas = fetch(url)
@@ -37,14 +39,21 @@ window.addEventListener('load', () => {
                 console.error('Erreur de connexion à l\'API');
             }
         }
+
         drawArea(gameDatas) {
             console.table(gameDatas);
             Tools.dataToHTML(gameDatas);
         }
+
         static endGame(bool) {
             if (bool == true) {
+                resultImage.src = './public/img/alien.png';
+                resultImage.style.width = '200px';
+                resultImage.position = 'absolute';
+                resultImage.style.top = '100px';
+                resultImage.style.left = '100px';
                 resultBoard.classList.remove('d-none');
-                resultBoard.classList.add('d-block');
+                resultBoard.classList.add('d-flex');
                 resultText.innerText = 'VOUS FEREZ MIEUX UNE PROCHAINE FOIS... ';
             }
         }
