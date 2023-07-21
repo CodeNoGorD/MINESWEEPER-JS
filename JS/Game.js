@@ -54,6 +54,8 @@ window.addEventListener('load', () => {
                 gridArea.style.pointerEvents = 'none';
                 restartButton.addEventListener('click', () => {
                     gridArea.style.pointerEvents = 'auto';
+                    gridArea.classList.remove('d-flex');
+                    gridArea.classList.add('d-none');
                     formArea.classList.remove('d-none');
                     formArea.classList.add('d-block');
                     resultBoard.classList.remove('d-flex');
@@ -82,7 +84,7 @@ window.addEventListener('load', () => {
         title.classList.add('d-block');
         title.innerText = `Bienvenue ${pseudo.value}`;
         gridArea.classList.remove('d-none');
-        gridArea.classList.add('d-block');
+        gridArea.classList.add('d-flex');
         console.dir(gameDatas);
 
         // INVERSION DU SIGNE 1 DANS LE TABLEAU POUR EVITER LES CONFLITS

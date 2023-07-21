@@ -97,7 +97,6 @@ export class Tools {
     }
 
     static fillDatas(datas, nbRows, nbCols) {
-
         datas.forEach((row, rowIndex) => {
             row.forEach((col, colIndex) => {
                 if (col != - 1) {
