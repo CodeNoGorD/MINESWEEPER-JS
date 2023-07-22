@@ -47,8 +47,77 @@ window.addEventListener('load', () => {
             Tools.dataToHTML(gameDatas);
         }
 
+        static revealSquare(row, col) {
+            const square = document.querySelector(`[data-row-index = '${row}'][data-col-index = '${col}']`);
+            square.classList.remove('square-hidden');
+            square.style.background = '#5947d5';
+            square.innerText = square.dataset.value;
+        }
+
+        static checkSquareToReveal(line, col) {
+            let tab = JSON.parse(sessionStorage.getItem('tableau'));
+            line = Number(line);
+            col = Number(col);
+            if (tab[line - 1] !=undefined && tab[line - 1][col - 1] != undefined){
+                const topLeft = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col - 1}']`)
+                if (topLeft.dataset.value == 0 && topLeft.classList.contains('square-hidden')){
+                    Game.revealSquare(topLeft.dataset.rowIndex, topLeft.dataset.colIndex);
+                    Game.checkSquareToReveal(line - 1, col - 1);
+                }
+            }
+            if (tab[line - 1] !=undefined && tab[line - 1][col] != undefined){
+                const top = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col}']`)
+                if (top.dataset.value == 0 && top.classList.contains('square-hidden')){
+                    Game.revealSquare(top.dataset.rowIndex, top.dataset.colIndex);
+                    Game.checkSquareToReveal(line - 1, col);
+                }
+            }
+            if (tab[line - 1] !=undefined && tab[line - 1][col + 1] != undefined){
+                const topRight = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col + 1}']`)
+                if (topRight.dataset.value == 0 && topRight.classList.contains('square-hidden')){
+                    Game.revealSquare(topRight.dataset.rowIndex, topRight.dataset.colIndex);
+                    Game.checkSquareToReveal(line - 1, col + 1);
+                }
+            }
+            if (tab[line] !=undefined && tab[line][col - 1] != undefined){
+                const left = document.querySelector(`[data-row-index = '${line}'][data-col-index = '${col - 1}']`)
+                if (left.dataset.value == 0 && left.classList.contains('square-hidden')){
+                    Game.revealSquare(left.dataset.rowIndex, left.dataset.colIndex);
+                    Game.checkSquareToReveal(line, col - 1);
+                }
+            }
+            if (tab[line] !=undefined && tab[line][col + 1] != undefined){
+                const right = document.querySelector(`[data-row-index = '${line}'][data-col-index = '${col + 1}']`)
+                if (right.dataset.value == 0 && right.classList.contains('square-hidden')){
+                    Game.revealSquare(right.dataset.rowIndex, right.dataset.colIndex);
+                    Game.checkSquareToReveal(line, col + 1);
+                }
+            }
+            if (tab[line + 1] !=undefined && tab[line + 1][col - 1] != undefined){
+                const bottomLeft = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col - 1}']`)
+                if (bottomLeft.dataset.value == 0 && bottomLeft.classList.contains('square-hidden')){
+                    Game.revealSquare(bottomLeft.dataset.rowIndex, bottomLeft.dataset.colIndex);
+                    Game.checkSquareToReveal(line + 1, col - 1);
+                }
+            }
+            if (tab[line + 1] !=undefined && tab[line + 1][col] != undefined){
+                const bottom = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col}']`)
+                if (bottom.dataset.value == 0  && bottom.classList.contains('square-hidden')){
+                    Game.revealSquare(bottom.dataset.rowIndex, bottom.dataset.colIndex);
+                    Game.checkSquareToReveal(line + 1, col);
+                }
+            }
+            if (tab[line + 1] !=undefined && tab[line + 1][col + 1] != undefined){
+                const bottomRight = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col + 1}']`)
+                if (bottomRight.dataset.value == 0  && bottomRight.classList.contains('square-hidden')){
+                    Game.revealSquare(bottomRight.dataset.rowIndex, bottomRight.dataset.colIndex);
+                    Game.checkSquareToReveal(line + 1, col + 1);
+                }
+            }
+        }
+
         static endGame(bool, result) {
-            if (bool == true && result == 'defaite') {
+            if (bool == true && result == 'lose') {
                 resultBoard.classList.remove('d-none');
                 resultBoard.classList.add('d-flex');
                 resultImage.src = './public/img/alien.png';
@@ -70,7 +139,7 @@ window.addEventListener('load', () => {
 
                 });
             }
-            if (bool == true && result == 'victoire') {
+            if (bool == true && result == 'victory') {
                 resultBoard.classList.remove('d-none');
                 resultBoard.classList.add('d-flex');
                 resultImage.src = './public/img/happy.png';
@@ -120,13 +189,16 @@ window.addEventListener('load', () => {
 
         // INSCRIRE LES VALEURS DANS LE TABLEAU
         let filledDatas = Tools.fillDatas(savedData, game.rows, game.cols);
+        let JSONArray = JSON.stringify(filledDatas);
+        sessionStorage.setItem('tableau', JSONArray);
         console.dir(filledDatas);
         // DESSINER LA GRILLE
         game.drawArea(filledDatas);
     });
 
 
-    // INTERACTION AVEC LA GRILLE
+    // INTERACTIONS AVEC LA GRILLE
+    // INTERACTIONS CLIC GAUCHE
     gridArea.addEventListener('click', (e) => {
         if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1 && !e.target.classList.contains('flag')) {
             e.target.classList.remove('square-hidden');
@@ -135,9 +207,12 @@ window.addEventListener('load', () => {
             const remainingSquares = document.querySelectorAll('.square-hidden');
             if (remainingSquares.length == mines.value) {
                 GAMEOVER = true;
-                RESULT = 'victoire';
-                Game.endGame(GAMEOVER, 'victoire');
+                RESULT = 'victory';
+                Game.endGame(GAMEOVER, 'victory');
                 console.dir('vous avez gagnée');
+            }
+            if (e.target.dataset.value == 0) {
+                Game.checkSquareToReveal(e.target.dataset.rowIndex, e.target.dataset.colIndex);
             }
             if (e.target.classList.contains('flag')) {
                 e.target.style.pointerEvents = 'none';
@@ -147,10 +222,11 @@ window.addEventListener('load', () => {
         if (e.target.dataset.value == -1 && !e.target.classList.contains('flag')) {
             e.target.style.backgroundImage = "url(/public/img/mine2.png)";
             GAMEOVER = true;
-            RESULT = 'defaite';
-            Game.endGame(GAMEOVER, 'defaite');
+            RESULT = 'lose';
+            Game.endGame(GAMEOVER, 'lose');
         }
     });
+    // INTERACTIONS CLIC DROIT
     gridArea.addEventListener('contextmenu', (e) => {
         if (e.target.classList.contains('square-hidden') && e.target.classList.contains('flag')) {
             e.preventDefault();
