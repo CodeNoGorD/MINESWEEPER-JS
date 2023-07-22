@@ -86,6 +86,7 @@ window.addEventListener('load', () => {
                     resultBoard.classList.add('d-none');
                     title.classList.remove('d-block');
                     title.classList.add('d-none');
+                    // pour supprimer les enfants de la grille précédente
                     while (gridArea.hasChildNodes()) {
                         gridArea.removeChild(gridArea.firstChild);
                     }
@@ -127,18 +128,19 @@ window.addEventListener('load', () => {
 
     // INTERACTION AVEC LA GRILLE
     gridArea.addEventListener('click', (e) => {
-        if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1) {
+        if (e.target.classList.contains('square-hidden') && !e.target.classList.contains('flag')) {
             e.target.classList.remove('square-hidden');
             e.target.style.background = '#5947d5';
             e.target.innerText = e.target.dataset.value;
             const remainingSquares = document.querySelectorAll('.square-hidden');
-            // console.dir(remainingSquares.length);
-            // console.dir(mines.value);
            if (remainingSquares.length == mines.value) {
                GAMEOVER = true;
                RESULT = 'victoire';
                Game.endGame(GAMEOVER, 'victoire');
                console.dir('vous avez gagnée');
+           }
+           if (e.target.classList.contains('flag')){
+               e.target.style.pointerEvents = 'none';
            }
         }
         if (e.target.dataset.value == -1) {
@@ -146,6 +148,17 @@ window.addEventListener('load', () => {
             GAMEOVER = true;
             RESULT = 'defaite';
             Game.endGame(GAMEOVER, 'defaite');
+        }
+    });
+    gridArea.addEventListener('contextmenu', (e) => {
+        if (e.target.classList.contains('square-hidden') && e.target.classList.contains('flag')) {
+            e.preventDefault();
+            e.target.classList.remove('flag');
+            e.target.style.backgroundImage = 'none';
+        } else if (e.target.classList.contains('square-hidden') && !e.target.classList.contains('flag')){
+            e.preventDefault();
+            e.target.classList.add('flag');
+            e.target.style.backgroundImage = 'url(../public/img/flag_little.png)';
         }
     });
 });

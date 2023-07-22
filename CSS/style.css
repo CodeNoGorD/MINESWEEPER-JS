@@ -23,6 +23,7 @@ li {
     cursor: pointer;
     width: 100px;
     height: 100px;
+    /*background:  url(public/img/flag_little.png) no-repeat center center / cover;*/
     background-color: #206b62;
     border: 2px solid #b2b1b1;
     display: flex;
@@ -45,7 +46,7 @@ li {
     transform: translate(-50%, -50%);
     background: #ff8888;
     width: 60vw;
-    height: 60vh;
+    height: 50vh;
     border: 5px solid black;
     border-radius: 5rem;
 }
@@ -75,4 +76,7 @@ li {
 .restartButton:hover{
     border: 5px solid white;
     transform: translateY(2px);
+}
+.flag{
+    background: url("public/img/flag_little.png");
 }
