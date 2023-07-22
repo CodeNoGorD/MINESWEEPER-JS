@@ -128,22 +128,23 @@ window.addEventListener('load', () => {
 
     // INTERACTION AVEC LA GRILLE
     gridArea.addEventListener('click', (e) => {
-        if (e.target.classList.contains('square-hidden') && !e.target.classList.contains('flag')) {
+        if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1 && !e.target.classList.contains('flag')) {
             e.target.classList.remove('square-hidden');
             e.target.style.background = '#5947d5';
             e.target.innerText = e.target.dataset.value;
             const remainingSquares = document.querySelectorAll('.square-hidden');
-           if (remainingSquares.length == mines.value) {
-               GAMEOVER = true;
-               RESULT = 'victoire';
-               Game.endGame(GAMEOVER, 'victoire');
-               console.dir('vous avez gagnée');
-           }
-           if (e.target.classList.contains('flag')){
-               e.target.style.pointerEvents = 'none';
-           }
+            if (remainingSquares.length == mines.value) {
+                GAMEOVER = true;
+                RESULT = 'victoire';
+                Game.endGame(GAMEOVER, 'victoire');
+                console.dir('vous avez gagnée');
+            }
+            if (e.target.classList.contains('flag')) {
+                e.target.style.pointerEvents = 'none';
+            }
         }
-        if (e.target.dataset.value == -1) {
+
+        if (e.target.dataset.value == -1 && !e.target.classList.contains('flag')) {
             e.target.style.backgroundImage = "url(/public/img/mine2.png)";
             GAMEOVER = true;
             RESULT = 'defaite';
@@ -155,7 +156,7 @@ window.addEventListener('load', () => {
             e.preventDefault();
             e.target.classList.remove('flag');
             e.target.style.backgroundImage = 'none';
-        } else if (e.target.classList.contains('square-hidden') && !e.target.classList.contains('flag')){
+        } else if (e.target.classList.contains('square-hidden') && !e.target.classList.contains('flag')) {
             e.preventDefault();
             e.target.classList.add('flag');
             e.target.style.backgroundImage = 'url(../public/img/flag_little.png)';
