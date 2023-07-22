@@ -17,6 +17,7 @@ window.addEventListener('load', () => {
     const resultText = document.querySelector('.resultText');
     const restartButton = document.querySelector('.restartButton');
     let GAMEOVER = false;
+    let RESULT;
 
     class Game {
         constructor(rows, cols, mines) {
@@ -46,11 +47,34 @@ window.addEventListener('load', () => {
             Tools.dataToHTML(gameDatas);
         }
 
-        static endGame(bool) {
-            if (bool == true) {
+        static endGame(bool, result) {
+            if (bool == true && result == 'defaite') {
                 resultBoard.classList.remove('d-none');
                 resultBoard.classList.add('d-flex');
+                resultImage.src = './public/img/alien.png';
                 resultText.innerText = `PERDU: VOUS FEREZ MIEUX LA PROCHAINE FOIS ${pseudo.value.toUpperCase()} ...`;
+                gridArea.style.pointerEvents = 'none';
+                restartButton.addEventListener('click', () => {
+                    gridArea.style.pointerEvents = 'auto';
+                    gridArea.classList.remove('d-flex');
+                    gridArea.classList.add('d-none');
+                    formArea.classList.remove('d-none');
+                    formArea.classList.add('d-block');
+                    resultBoard.classList.remove('d-flex');
+                    resultBoard.classList.add('d-none');
+                    title.classList.remove('d-block');
+                    title.classList.add('d-none');
+                    while (gridArea.hasChildNodes()) {
+                        gridArea.removeChild(gridArea.firstChild);
+                    }
+
+                });
+            }
+            if (bool == true && result == 'victoire') {
+                resultBoard.classList.remove('d-none');
+                resultBoard.classList.add('d-flex');
+                resultImage.src = './public/img/happy.png';
+                resultText.innerText = `BRAVO ${pseudo.value.toUpperCase()} VOUS ETES TROP FORT !`;
                 gridArea.style.pointerEvents = 'none';
                 restartButton.addEventListener('click', () => {
                     gridArea.style.pointerEvents = 'auto';
@@ -103,17 +127,25 @@ window.addEventListener('load', () => {
 
     // INTERACTION AVEC LA GRILLE
     gridArea.addEventListener('click', (e) => {
-        let count = 0;
-
         if (e.target.classList.contains('square-hidden') && e.target.dataset.value != -1) {
             e.target.classList.remove('square-hidden');
             e.target.style.background = '#5947d5';
             e.target.innerText = e.target.dataset.value;
+            const remainingSquares = document.querySelectorAll('.square-hidden');
+            // console.dir(remainingSquares.length);
+            // console.dir(mines.value);
+           if (remainingSquares.length == mines.value) {
+               GAMEOVER = true;
+               RESULT = 'victoire';
+               Game.endGame(GAMEOVER, 'victoire');
+               console.dir('vous avez gagnée');
+           }
         }
         if (e.target.dataset.value == -1) {
             e.target.style.backgroundImage = "url(/public/img/mine2.png)";
             GAMEOVER = true;
-            Game.endGame(GAMEOVER);
+            RESULT = 'defaite';
+            Game.endGame(GAMEOVER, 'defaite');
         }
     });
 });
