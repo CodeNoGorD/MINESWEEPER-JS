@@ -41,12 +41,12 @@ li {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 30%;
+    top: 2%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: #ff8888;
     width: 60vw;
-    height: 50vh;
+    min-height: 60vh;
     border: 5px solid black;
     border-radius: 5rem;
 }
@@ -60,23 +60,86 @@ li {
     text-align: center;
     font-size: 2rem;
     margin: 0 1rem;
+    text-shadow: 2px 2px 2px black;
 }
 .restartButton{
     padding: 0.5em;
     display: block;
     margin: 0.5rem auto;
-    width: 10rem;
+    width: 15rem;
     background: #206b62;
     color: white;
     border: 5px solid #313030;
     border-radius: 3rem;
     transition: all 0.5s;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
 }
 .restartButton:hover{
     border: 5px solid white;
     transform: translateY(2px);
 }
+
+.scoresBoard {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #5ab28a;
+    width: 90vw;
+    min-height: 80vh;
+    border: 5px solid black;
+    border-radius: 5rem;
+    z-index: 99;
+}
+.scoresImage {
+    margin: 0.5rem 0;
+    justify-self: start;
+}
+
+.scoresText {
+    color: black;
+    text-align: center;
+    font-size: 2rem;
+    margin: 0 1rem;
+    text-shadow: 2px 2px 2px black;
+}
+.scoresButton{
+    padding: 0.5em;
+    display: block;
+    margin: 0.5rem auto;
+    width: 15rem;
+    background: #5ab28a;
+    color: white;
+    border: 5px solid #313030;
+    border-radius: 3rem;
+    transition: all 0.5s;
+    font-size: 1.2rem;
+}
+.scoresButton:hover{
+    border: 5px solid white;
+    transform: translateY(2px);
+}
+
+
+.scoresClose{
+    padding: 0.5em;
+    display: block;
+    margin: 0.5rem auto;
+    width: 15rem;
+    background: #206b62;
+    color: white;
+    border: 5px solid #313030;
+    border-radius: 3rem;
+    transition: all 0.5s;
+    font-size: 1.2rem;
+}
+.scoresClose:hover{
+    border: 5px solid white;
+    transform: translateY(2px);
+}
+
 .flag{
     background: url("public/img/flag_little.png");
 }

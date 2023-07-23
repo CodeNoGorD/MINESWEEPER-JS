@@ -7,7 +7,6 @@ window.addEventListener('load', () => {
     const formArea = document.querySelector('.form-area');
     const gridArea = document.querySelector('.grid-area');
     const title = document.querySelector('.title');
-    const pseudo = document.querySelector('#pseudo');
     const rows = document.querySelector('#rows');
     const cols = document.querySelector('#cols');
     const mines = document.querySelector('#mines');
@@ -16,6 +15,10 @@ window.addEventListener('load', () => {
     const resultImage = document.querySelector('.resultImage');
     const resultText = document.querySelector('.resultText');
     const restartButton = document.querySelector('.restartButton');
+    const pseudo = document.querySelector('#pseudo');
+    const scoresButton = document.querySelector('.scoresButton');
+    const scoresBoard = document.querySelector('.scoresBoard');
+    const scoresClose = document.querySelector('.scoresClose');
     let GAMEOVER = false;
     let RESULT;
 
@@ -167,8 +170,11 @@ window.addEventListener('load', () => {
     // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {
         e.preventDefault();
+        Tools.checkForm();
         // CREATION DU JEU
         let game = new Game(rows.value, cols.value, mines.value);
+        sessionStorage.setItem('pseudo', pseudo.value);
+
         // RECUPERATION DES DATAS EN SE CONNECTANT A l'API
         let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
         rows=${rows.value}&cols=${cols.value}&mines=${mines.value}`);
@@ -176,24 +182,21 @@ window.addEventListener('load', () => {
         formArea.classList.add('d-none');
         title.classList.remove('d-none');
         title.classList.add('d-block');
-        title.innerText = `Bienvenue ${pseudo.value}`;
+        title.innerText = `Bienvenue ${sessionStorage.getItem('pseudo')}`;
         gridArea.classList.remove('d-none');
         gridArea.classList.add('d-flex');
-        console.dir(gameDatas);
 
         // INVERSION DU SIGNE 1 DANS LE TABLEAU POUR EVITER LES CONFLITS
         let reversedDatas = Tools.reverseSign(gameDatas);
-        console.dir(reversedDatas);
         let savedData = JSON.parse(JSON.stringify(reversedDatas));
-        console.dir(savedData);
 
         // INSCRIRE LES VALEURS DANS LE TABLEAU
         let filledDatas = Tools.fillDatas(savedData, game.rows, game.cols);
         let JSONArray = JSON.stringify(filledDatas);
         sessionStorage.setItem('tableau', JSONArray);
-        console.dir(filledDatas);
         // DESSINER LA GRILLE
         game.drawArea(filledDatas);
+
     });
 
 
@@ -238,4 +241,27 @@ window.addEventListener('load', () => {
             e.target.style.backgroundImage = 'url(../public/img/flag_little.png)';
         }
     });
+
+    //INTERACTIONS AVEC BOUTTON SCORES
+    scoresButton.addEventListener('click', () => {
+        let player = new Player(pseudo.value,1, 0, 0);
+        const scoresPseudo = document.querySelector('.scores_pseudo');
+        const scoresTry = document.querySelector('.scores_try');
+        const scoresLose = document.querySelector('.scores_lose');
+        const scoresWin = document.querySelector('.scores_win');
+
+        sessionStorage.setItem('pseudo', player.pseudo);
+        sessionStorage.setItem('tryNumber', player.tryNumber);
+        sessionStorage.setItem('loseNumber', player.loseNumber);
+        sessionStorage.setItem('winNumber', player.winNumber);
+
+        player.showScores(scoresBoard);
+        scoresPseudo.textContent = scoresPseudo.textContent + sessionStorage.getItem('pseudo');
+        scoresTry.textContent = scoresTry.textContent + sessionStorage.getItem('tryNumber');
+        scoresLose.textContent = scoresLose.textContent + sessionStorage.getItem('loseNumber');
+        scoresWin.textContent = scoresWin.textContent + sessionStorage.getItem('winNumber');
+        scoresClose.addEventListener('click', () => {
+            player.closeBoard();
+        });
+    })
 });

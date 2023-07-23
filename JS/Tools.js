@@ -128,4 +128,8 @@ export class Tools {
             gridArea.append(line);
         });
     }
+
+    static checkForm() {
+
+    }
 }
