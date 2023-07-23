@@ -1,5 +1,6 @@
 'use strict';
 const gridArea = document.querySelector('.grid-area');
+const errorsBoard = document.querySelector('.errors-board');
 
 export class Tools {
     constructor() {
@@ -129,7 +130,37 @@ export class Tools {
         });
     }
 
-    static checkForm() {
+    static createAlertMessage(msg) {
+        let message = document.createElement('div');
+        message.innerText = msg;
+        message.classList.add('alert', 'alert-danger', 'alert-rows');
+        errorsBoard.append(message);
+    }
 
+    static showErrors (arr) {
+        let messages = {
+            pseudoTaille: 'Veuillez saisir un pseudo de minimum 3 caractères et max 20',
+            rowMaxLength: 'Merci de saisir un nombre de lignes inférieur ou égal à 100',
+            colMaxLength: 'Merci de saisir un nombre de colonnes inférieur ou égal à 100',
+            minesNumber: 'Merci de saisir un nombre de mines raisonnable sinon ca va être compliqué 😊',
+    };
+        arr.forEach((row) => {
+            switch (row) {
+                case 'pseudoTaille':
+                    Tools.createAlertMessage(messages.pseudoTaille);
+                    break;
+                case 'rowMaxLength':
+                    Tools.createAlertMessage(messages.rowMaxLength);
+                    break;
+                case 'colMaxLength':
+                    Tools.createAlertMessage(messages.colMaxLength);
+                    break;
+                case 'minesNumber':
+                    Tools.createAlertMessage(messages.minesNumber);
+                    break;
+                default:
+                    console.log('Cela ne marche pas');
+            }
+        });
     }
 }

@@ -36,62 +36,68 @@
 <main>
     <div class="form-area">
         <h1 class="text-center bold my-3">BIENVENUE DANS LE JEU DEMINEUR :</h1>
+        <div class="errors-board d-none"></div>
         <form action="" method="GET" class="d-flex flex-column w-75 mx-auto gap-4" id="form">
             <label for="pseudo" class="form-label">PSEUDO</label>
             <input type="text" name="pseudo" id="pseudo" placeholder="Veuillez saisir votre pseudo"
-                   class="form-control"/>
+                   class="form-control" required/>
             <h2 class="my-3">TAILLE DE LA GRILLE</h2>
             <label for="rows" class="form-label">NOMBRE DE LIGNES</label>
-            <input type="number" name="rows" id="rows" value="3" placeholder="Veuillez préciser le nombre de lignes"
-                   class="form-control"/>
+            <input type="number" name="rows" id="rows" value="3" min="2" max=""
+                   placeholder="Veuillez préciser le nombre de lignes"
+                   class="form-control" required/>
             <label for="cols" class="form-label">NOMBRE DE COLONNES</label>
-            <input type="number" name="cols" id="cols" value="3" placeholder="Veuillez préciser le nombre de colonnes"
-                   class="form-control"/>
+            <input type="number" name="cols" id="cols" value="3" min="2" max="100"
+                   placeholder="Veuillez préciser le nombre de colonnes"
+                   class="form-control" required/>
             <label for="mines" class="form-label">NOMBRE DE MINES</label>
-            <input type="number" name="mines" id="mines" value="1" placeholder="Veuillez préciser le nombre de mines"
-                   class="form-control"/>
+            <input type="number" name="mines" id="mines" value="1" min="1" max=""
+                   placeholder="Veuillez préciser le nombre de mines"
+                   class="form-control" required/>
             <button class="btn btn-success my-3 w-25" id="btn-submit">VALIDER</button>
         </form>
     </div>
 
     <h1 class="d-none title text-center my-2"></h1>
     <div class="grid-area d-none my-2 d-flex flex-column justify-content-center align-items-center"></div>
-    <div class="scoresBoard d-none">
-        <img class="scoresImage align-self-center d-block m-2" src="./public/img/minesweeper_logo.png" width="200" alt="Petit personnage triste car jeu perdu">
+    <div class="scores-board d-none">
+        <img class="scores-image align-self-center d-block m-2" src="./public/img/minesweeper_logo.png" width="200"
+             alt="Petit personnage triste car jeu perdu">
         <div>
-            <div class="scoresText my-3 text-white d-flex flex-column w-75 mx-auto gap-3">
-                <h2 class="scores_title">TABLEAU DES SCORES</h2>
-                <p class="scores_pseudo align-self-start">PSEUDO: </p>
-                <p class="scores_try align-self-start">Partie N° </p>
-                <p class="scores_lose align-self-start">Nombre de défaites: </p>
-                <p class="scores_win align-self-start">Nombre de victoires: </p>
+            <div class="scores-text my-3 text-white d-flex flex-column w-75 mx-auto gap-3">
+                <h2 class="scores-title">TABLEAU DES SCORES</h2>
+                <p class="scores-pseudo align-self-start">PSEUDO: </p>
+                <p class="scores-try align-self-start">Partie N° </p>
+                <p class="scores-lose align-self-start">Nombre de défaites: </p>
+                <p class="scores-win align-self-start">Nombre de victoires: </p>
             </div>
-            <h3 class="scores_last w-75 mx-auto">LES DERNIERS SCORES</h3>
-            <table class="scores_table table table-striped w-75 mx-auto my-4">
+            <h3 class="scores-last w-75 mx-auto">LES DERNIERS SCORES</h3>
+            <table class="scores-table table table-striped w-75 mx-auto my-4">
                 <thead>
-                    <th>Pseudo</th>
-                    <th>Nombre de parties</th>
-                    <th>Nombre de défaites</th>
-                    <th>Nombre de victoires</th>
+                <th>Pseudo</th>
+                <th>Nombre de parties</th>
+                <th>Nombre de défaites</th>
+                <th>Nombre de victoires</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Seb</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
+                <tr>
+                    <td>Seb</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>2</td>
+                </tr>
                 </tbody>
             </table>
         </div>
-        <button type="button" class="scoresClose">FERMER</button>
+        <button type="button" class="scores-close">FERMER</button>
     </div>
-    <div class="resultBoard d-none">
-        <img class="resultImage align-self-center d-block m-2 my-2" src="" width="200" alt="Petit personnage triste car jeu perdu">
-        <p class="resultText my-3 text-white"></p>
+    <div class="result-board d-none">
+        <img class="result-image align-self-center d-block m-2 my-2" src="" width="200"
+             alt="Petit personnage triste car jeu perdu">
+        <p class="result-text my-3 text-white"></p>
         <div class="d-flex justify-content-evenly my-3">
-            <button class="scoresButton" type="button">AFFICHER SCORES</button>
-            <button type="button" class="restartButton">RESTART</button>
+            <button class="scores-button" type="button">AFFICHER SCORES</button>
+            <button type="button" class="restart-button">RESTART</button>
         </div>
     </div>
 </main>

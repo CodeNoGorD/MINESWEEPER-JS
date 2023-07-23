@@ -11,14 +11,15 @@ window.addEventListener('load', () => {
     const cols = document.querySelector('#cols');
     const mines = document.querySelector('#mines');
     const btnStart = document.querySelector('#btn-submit');
-    const resultBoard = document.querySelector('.resultBoard');
-    const resultImage = document.querySelector('.resultImage');
-    const resultText = document.querySelector('.resultText');
-    const restartButton = document.querySelector('.restartButton');
+    const resultBoard = document.querySelector('.result-board');
+    const resultImage = document.querySelector('.result-image');
+    const resultText = document.querySelector('.result-text');
+    const restartButton = document.querySelector('.restart-button');
     const pseudo = document.querySelector('#pseudo');
-    const scoresButton = document.querySelector('.scoresButton');
-    const scoresBoard = document.querySelector('.scoresBoard');
-    const scoresClose = document.querySelector('.scoresClose');
+    const scoresButton = document.querySelector('.scores-button');
+    const scoresBoard = document.querySelector('.scores-board');
+    const scoresClose = document.querySelector('.scores-close');
+    const errorsBoard = document.querySelector('.errors-board');
     let GAMEOVER = false;
     let RESULT;
 
@@ -58,61 +59,61 @@ window.addEventListener('load', () => {
         }
 
         static checkSquareToReveal(line, col) {
-            let tab = JSON.parse(sessionStorage.getItem('tableau'));
+            let tab = JSON.parse(localStorage.getItem('tableau'));
             line = Number(line);
             col = Number(col);
-            if (tab[line - 1] !=undefined && tab[line - 1][col - 1] != undefined){
+            if (tab[line - 1] != undefined && tab[line - 1][col - 1] != undefined) {
                 const topLeft = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col - 1}']`)
-                if (topLeft.dataset.value == 0 && topLeft.classList.contains('square-hidden')){
+                if (topLeft.dataset.value == 0 && topLeft.classList.contains('square-hidden')) {
                     Game.revealSquare(topLeft.dataset.rowIndex, topLeft.dataset.colIndex);
                     Game.checkSquareToReveal(line - 1, col - 1);
                 }
             }
-            if (tab[line - 1] !=undefined && tab[line - 1][col] != undefined){
+            if (tab[line - 1] != undefined && tab[line - 1][col] != undefined) {
                 const top = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col}']`)
-                if (top.dataset.value == 0 && top.classList.contains('square-hidden')){
+                if (top.dataset.value == 0 && top.classList.contains('square-hidden')) {
                     Game.revealSquare(top.dataset.rowIndex, top.dataset.colIndex);
                     Game.checkSquareToReveal(line - 1, col);
                 }
             }
-            if (tab[line - 1] !=undefined && tab[line - 1][col + 1] != undefined){
+            if (tab[line - 1] != undefined && tab[line - 1][col + 1] != undefined) {
                 const topRight = document.querySelector(`[data-row-index = '${line - 1}'][data-col-index = '${col + 1}']`)
-                if (topRight.dataset.value == 0 && topRight.classList.contains('square-hidden')){
+                if (topRight.dataset.value == 0 && topRight.classList.contains('square-hidden')) {
                     Game.revealSquare(topRight.dataset.rowIndex, topRight.dataset.colIndex);
                     Game.checkSquareToReveal(line - 1, col + 1);
                 }
             }
-            if (tab[line] !=undefined && tab[line][col - 1] != undefined){
+            if (tab[line] != undefined && tab[line][col - 1] != undefined) {
                 const left = document.querySelector(`[data-row-index = '${line}'][data-col-index = '${col - 1}']`)
-                if (left.dataset.value == 0 && left.classList.contains('square-hidden')){
+                if (left.dataset.value == 0 && left.classList.contains('square-hidden')) {
                     Game.revealSquare(left.dataset.rowIndex, left.dataset.colIndex);
                     Game.checkSquareToReveal(line, col - 1);
                 }
             }
-            if (tab[line] !=undefined && tab[line][col + 1] != undefined){
+            if (tab[line] != undefined && tab[line][col + 1] != undefined) {
                 const right = document.querySelector(`[data-row-index = '${line}'][data-col-index = '${col + 1}']`)
-                if (right.dataset.value == 0 && right.classList.contains('square-hidden')){
+                if (right.dataset.value == 0 && right.classList.contains('square-hidden')) {
                     Game.revealSquare(right.dataset.rowIndex, right.dataset.colIndex);
                     Game.checkSquareToReveal(line, col + 1);
                 }
             }
-            if (tab[line + 1] !=undefined && tab[line + 1][col - 1] != undefined){
+            if (tab[line + 1] != undefined && tab[line + 1][col - 1] != undefined) {
                 const bottomLeft = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col - 1}']`)
-                if (bottomLeft.dataset.value == 0 && bottomLeft.classList.contains('square-hidden')){
+                if (bottomLeft.dataset.value == 0 && bottomLeft.classList.contains('square-hidden')) {
                     Game.revealSquare(bottomLeft.dataset.rowIndex, bottomLeft.dataset.colIndex);
                     Game.checkSquareToReveal(line + 1, col - 1);
                 }
             }
-            if (tab[line + 1] !=undefined && tab[line + 1][col] != undefined){
+            if (tab[line + 1] != undefined && tab[line + 1][col] != undefined) {
                 const bottom = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col}']`)
-                if (bottom.dataset.value == 0  && bottom.classList.contains('square-hidden')){
+                if (bottom.dataset.value == 0 && bottom.classList.contains('square-hidden')) {
                     Game.revealSquare(bottom.dataset.rowIndex, bottom.dataset.colIndex);
                     Game.checkSquareToReveal(line + 1, col);
                 }
             }
-            if (tab[line + 1] !=undefined && tab[line + 1][col + 1] != undefined){
+            if (tab[line + 1] != undefined && tab[line + 1][col + 1] != undefined) {
                 const bottomRight = document.querySelector(`[data-row-index = '${line + 1}'][data-col-index = '${col + 1}']`)
-                if (bottomRight.dataset.value == 0  && bottomRight.classList.contains('square-hidden')){
+                if (bottomRight.dataset.value == 0 && bottomRight.classList.contains('square-hidden')) {
                     Game.revealSquare(bottomRight.dataset.rowIndex, bottomRight.dataset.colIndex);
                     Game.checkSquareToReveal(line + 1, col + 1);
                 }
@@ -165,38 +166,64 @@ window.addEventListener('load', () => {
                 });
             }
         }
+
+        static checkForm() {
+            let errors = [];
+            if (pseudo.value == '' || pseudo.value.length < 3 || pseudo.value.length > 20){
+                errors.push('pseudoTaille');
+            }
+            if (rows.value > 100){
+                errors.push('rowMaxLength');
+            }
+            if (cols.value > 100){
+                errors.push('colMaxLength');
+            }
+            if (mines.value > (rows.value * cols.value) - 1){
+                errors.push('minesNumber');
+            }
+            return errors;
+        }
     }
 
     // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {
+        const errorsBoard = document.querySelector('.errors-board');
+        let errorsList = []
         e.preventDefault();
-        Tools.checkForm();
-        // CREATION DU JEU
-        let game = new Game(rows.value, cols.value, mines.value);
-        sessionStorage.setItem('pseudo', pseudo.value);
 
-        // RECUPERATION DES DATAS EN SE CONNECTANT A l'API
-        let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
+        errorsBoard.innerHTML = '';
+        errorsList = Game.checkForm();
+        if (errorsList.length == 0) {
+            // CREATION DU JEU
+            let game = new Game(rows.value, cols.value, mines.value);
+            localStorage.setItem('pseudo', pseudo.value);
+
+            // RECUPERATION DES DATAS EN SE CONNECTANT A l'API
+            let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
         rows=${rows.value}&cols=${cols.value}&mines=${mines.value}`);
-        //TRANSITION DE LA PAGE AVEC APPARITION DE LA GRILLE
-        formArea.classList.add('d-none');
-        title.classList.remove('d-none');
-        title.classList.add('d-block');
-        title.innerText = `Bienvenue ${sessionStorage.getItem('pseudo')}`;
-        gridArea.classList.remove('d-none');
-        gridArea.classList.add('d-flex');
+            //TRANSITION DE LA PAGE AVEC APPARITION DE LA GRILLE
+            formArea.classList.add('d-none');
+            title.classList.remove('d-none');
+            title.classList.add('d-block');
+            title.innerText = `Bienvenue ${localStorage.getItem('pseudo')}`;
+            gridArea.classList.remove('d-none');
+            gridArea.classList.add('d-flex');
 
-        // INVERSION DU SIGNE 1 DANS LE TABLEAU POUR EVITER LES CONFLITS
-        let reversedDatas = Tools.reverseSign(gameDatas);
-        let savedData = JSON.parse(JSON.stringify(reversedDatas));
+            // INVERSION DU SIGNE 1 DANS LE TABLEAU POUR EVITER LES CONFLITS
+            let reversedDatas = Tools.reverseSign(gameDatas);
+            let savedData = JSON.parse(JSON.stringify(reversedDatas));
 
-        // INSCRIRE LES VALEURS DANS LE TABLEAU
-        let filledDatas = Tools.fillDatas(savedData, game.rows, game.cols);
-        let JSONArray = JSON.stringify(filledDatas);
-        sessionStorage.setItem('tableau', JSONArray);
-        // DESSINER LA GRILLE
-        game.drawArea(filledDatas);
-
+            // INSCRIRE LES VALEURS DANS LE TABLEAU
+            let filledDatas = Tools.fillDatas(savedData, game.rows, game.cols);
+            let JSONArray = JSON.stringify(filledDatas);
+            localStorage.setItem('tableau', JSONArray);
+            // DESSINER LA GRILLE
+            game.drawArea(filledDatas);
+        } else {
+            Tools.showErrors(errorsList);
+            errorsBoard.classList.remove('d-none');
+            errorsBoard.classList.add('d-block');
+        }
     });
 
 
@@ -212,7 +239,6 @@ window.addEventListener('load', () => {
                 GAMEOVER = true;
                 RESULT = 'victory';
                 Game.endGame(GAMEOVER, 'victory');
-                console.dir('vous avez gagnée');
             }
             if (e.target.dataset.value == 0) {
                 Game.checkSquareToReveal(e.target.dataset.rowIndex, e.target.dataset.colIndex);
@@ -244,22 +270,22 @@ window.addEventListener('load', () => {
 
     //INTERACTIONS AVEC BOUTTON SCORES
     scoresButton.addEventListener('click', () => {
-        let player = new Player(pseudo.value,1, 0, 0);
-        const scoresPseudo = document.querySelector('.scores_pseudo');
-        const scoresTry = document.querySelector('.scores_try');
-        const scoresLose = document.querySelector('.scores_lose');
-        const scoresWin = document.querySelector('.scores_win');
+        let player = new Player(pseudo.value, 1, 0, 0);
+        const scoresPseudo = document.querySelector('.scores-pseudo');
+        const scoresTry = document.querySelector('.scores-try');
+        const scoresLose = document.querySelector('.scores-lose');
+        const scoresWin = document.querySelector('.scores-win');
 
-        sessionStorage.setItem('pseudo', player.pseudo);
-        sessionStorage.setItem('tryNumber', player.tryNumber);
-        sessionStorage.setItem('loseNumber', player.loseNumber);
-        sessionStorage.setItem('winNumber', player.winNumber);
+        // localStorage.setItem('pseudo', player.pseudo);
+        localStorage.setItem('tryNumber', player.tryNumber);
+        localStorage.setItem('loseNumber', player.loseNumber);
+        localStorage.setItem('winNumber', player.winNumber);
 
         player.showScores(scoresBoard);
-        scoresPseudo.textContent = scoresPseudo.textContent + sessionStorage.getItem('pseudo');
-        scoresTry.textContent = scoresTry.textContent + sessionStorage.getItem('tryNumber');
-        scoresLose.textContent = scoresLose.textContent + sessionStorage.getItem('loseNumber');
-        scoresWin.textContent = scoresWin.textContent + sessionStorage.getItem('winNumber');
+        scoresPseudo.textContent = scoresPseudo.textContent + localStorage.getItem('pseudo');
+        scoresTry.textContent = scoresTry.textContent + localStorage.getItem('tryNumber');
+        scoresLose.textContent = scoresLose.textContent + localStorage.getItem('loseNumber');
+        scoresWin.textContent = scoresWin.textContent + localStorage.getItem('winNumber');
         scoresClose.addEventListener('click', () => {
             player.closeBoard();
         });

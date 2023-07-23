@@ -1,3 +1,4 @@
+/* GENERAL */
 * {
     padding: 0;
     margin: 0;
@@ -6,19 +7,19 @@
 li {
     list-style: none;
 }
-
+/* FORMULAIRE */
 .form-area {
     min-height: 75vh;
     display: grid;
     place-items: center;
 }
+/* TERRAIN */
 .grid-area {
     min-height: 75vh;
     margin: 2rem 0rem;
     width: 80%;
     margin: 0 auto;
 }
-
 .square {
     cursor: pointer;
     width: 100px;
@@ -37,7 +38,12 @@ li {
     background-color: #31d1bc;
     border: 2px solid #f0ecec;
 }
-.resultBoard {
+.flag{
+    background: url("public/img/flag_little.png");
+}
+
+/* TABLEAU FIN DE PARTIE (RESULTATS) */
+.result-board {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -50,19 +56,20 @@ li {
     border: 5px solid black;
     border-radius: 5rem;
 }
-.resultImage {
+.result-image {
     margin: 0.5rem 0;
     justify-self: start;
 }
 
-.resultText {
+.result-text {
     color: black;
     text-align: center;
     font-size: 2rem;
     margin: 0 1rem;
     text-shadow: 2px 2px 2px black;
 }
-.restartButton{
+/* REDEMARRAGE DU JEU */
+.restart-button{
     padding: 0.5em;
     display: block;
     margin: 0.5rem auto;
@@ -74,12 +81,13 @@ li {
     transition: all 0.5s;
     font-size: 1.2rem;
 }
-.restartButton:hover{
+.restart-button:hover{
     border: 5px solid white;
     transform: translateY(2px);
 }
 
-.scoresBoard {
+/* TABLEAU DES SCORES DES PARTIES */
+.scores-board {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -93,19 +101,19 @@ li {
     border-radius: 5rem;
     z-index: 99;
 }
-.scoresImage {
+.scores-image {
     margin: 0.5rem 0;
     justify-self: start;
 }
 
-.scoresText {
+.scores-text {
     color: black;
     text-align: center;
     font-size: 2rem;
     margin: 0 1rem;
     text-shadow: 2px 2px 2px black;
 }
-.scoresButton{
+.scores-button{
     padding: 0.5em;
     display: block;
     margin: 0.5rem auto;
@@ -117,13 +125,11 @@ li {
     transition: all 0.5s;
     font-size: 1.2rem;
 }
-.scoresButton:hover{
+.scores-button:hover{
     border: 5px solid white;
     transform: translateY(2px);
 }
-
-
-.scoresClose{
+.scores-close{
     padding: 0.5em;
     display: block;
     margin: 0.5rem auto;
@@ -135,11 +141,8 @@ li {
     transition: all 0.5s;
     font-size: 1.2rem;
 }
-.scoresClose:hover{
+.scores-close:hover{
     border: 5px solid white;
     transform: translateY(2px);
 }
 
-.flag{
-    background: url("public/img/flag_little.png");
-}
