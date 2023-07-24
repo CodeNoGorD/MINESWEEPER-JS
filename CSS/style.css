@@ -1,8 +1,11 @@
 /* GENERAL */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
 }
 li {
     list-style: none;
@@ -87,7 +90,7 @@ li {
 }
 
 /* TABLEAU DES SCORES DES PARTIES */
-.scores-board {
+.scores-board, .rules-board {
     display: flex;
     flex-direction: column;
     position: absolute;

@@ -140,6 +140,7 @@ export class Tools {
     static showErrors (arr) {
         let messages = {
             pseudoTaille: 'Veuillez saisir un pseudo de minimum 3 caractères et max 20',
+            pseudoFormat: 'Veuillez ne saisir que des caractères de a à z en minuscule ou majuscule et des nombres de 0 à 9',
             rowMaxLength: 'Merci de saisir un nombre de lignes inférieur ou égal à 100',
             colMaxLength: 'Merci de saisir un nombre de colonnes inférieur ou égal à 100',
             minesNumber: 'Merci de saisir un nombre de mines raisonnable sinon ca va être compliqué 😊',
@@ -148,6 +149,9 @@ export class Tools {
             switch (row) {
                 case 'pseudoTaille':
                     Tools.createAlertMessage(messages.pseudoTaille);
+                    break;
+                case 'pseudoFormat':
+                    Tools.createAlertMessage(messages.pseudoFormat);
                     break;
                 case 'rowMaxLength':
                     Tools.createAlertMessage(messages.rowMaxLength);

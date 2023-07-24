@@ -20,6 +20,9 @@ window.addEventListener('load', () => {
     const scoresBoard = document.querySelector('.scores-board');
     const scoresClose = document.querySelector('.scores-close');
     const errorsBoard = document.querySelector('.errors-board');
+    const rulesButton = document.querySelector('.rules-button');
+    const rulesBoard = document.querySelector('.rules-board');
+    const rulesCloseButton = document.querySelector('.close-rules-button');
     let GAMEOVER = false;
     let RESULT;
 
@@ -169,8 +172,13 @@ window.addEventListener('load', () => {
 
         static checkForm() {
             let errors = [];
+            let regexp = new RegExp('^[a-zA-Z0-9]{3,20}$', 'g');
+
             if (pseudo.value == '' || pseudo.value.length < 3 || pseudo.value.length > 20){
                 errors.push('pseudoTaille');
+            }
+            if (!regexp.test(pseudo.value)){
+                errors.push('pseudoFormat')
             }
             if (rows.value > 100){
                 errors.push('rowMaxLength');
@@ -205,7 +213,7 @@ window.addEventListener('load', () => {
             formArea.classList.add('d-none');
             title.classList.remove('d-none');
             title.classList.add('d-block');
-            title.innerText = `Bienvenue ${localStorage.getItem('pseudo')}`;
+            title.innerText = `Bienvenue ${localStorage.getItem('pseudo').toUpperCase()}`;
             gridArea.classList.remove('d-none');
             gridArea.classList.add('d-flex');
 
@@ -289,5 +297,15 @@ window.addEventListener('load', () => {
         scoresClose.addEventListener('click', () => {
             player.closeBoard();
         });
-    })
+    });
+
+    //INTERACTIONS AVEC BOUTTON REGLES
+    rulesButton.addEventListener('click', () => {
+        rulesBoard.classList.remove('d-none');
+        rulesBoard.classList.add('d-flex');
+        rulesCloseButton.addEventListener('click', () => {
+            rulesBoard.classList.remove('d-flex');
+            rulesBoard.classList.add('d-none');
+        });
+    });
 });

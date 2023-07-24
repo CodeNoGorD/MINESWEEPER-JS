@@ -26,7 +26,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav d-flex justify-content-between w-75">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="./index.html">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="./index.html">ACCUEIL</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="rules-button btn btn-primary">REGLES DU JEU</button>
                     </li>
                 </ul>
             </div>
@@ -43,7 +46,7 @@
                    class="form-control" required/>
             <h2 class="my-3">TAILLE DE LA GRILLE</h2>
             <label for="rows" class="form-label">NOMBRE DE LIGNES</label>
-            <input type="number" name="rows" id="rows" value="3" min="2" max=""
+            <input type="number" name="rows" id="rows" value="3" min="2" max="100"
                    placeholder="Veuillez préciser le nombre de lignes"
                    class="form-control" required/>
             <label for="cols" class="form-label">NOMBRE DE COLONNES</label>
@@ -60,8 +63,29 @@
 
     <h1 class="d-none title text-center my-2"></h1>
     <div class="grid-area d-none my-2 d-flex flex-column justify-content-center align-items-center"></div>
+    <div class="rules-board d-none">
+        <img class="result-image align-self-center d-block m-2 my-2" src="./public/img/minesweeper_logo.png" alt="logo du jeu" width="200"
+             alt="Petit personnage triste car jeu perdu">
+        <h2 class="text-center rules-title">LES REGLES DU JEU DEMINEUR</h2>
+        <p class="rules-text my-3 text-white d-block mx-auto w-75">
+            Le but du jeu est de trouver et de marquer les cases de la grille qui camouflent une mine.
+            Lorsque vous cliquez sur une case, celle-ci vous indiquera le nombre de cases adjacentes
+            contenant une mine. Si vous cliquez sur une case n'ayant aucune mine autour d'elle, celle-ci
+            vous révélera automatiquement les cases adjacentes.</br></br>
+
+
+            Vous pouvez marquer les cases que vous soupçonnez de cacher une mine en plaçant un marqueur
+            "drapeau" dessus à l'aide du clic droit. Ceci désactivera toute possibilité de cliquer sur
+            la case.</br></br>
+            Vous remportez la partie lorsque vous parvenez à révéler toutes les cases sans mine.
+            Si vous cliquez sur une case contenant une mine, la partie se terminera par une défaite.</br>
+        </p>
+        <div class="d-block mx-auto my-3">
+            <button class="close-rules-button btn btn-primary my-3" type="button">FERMER</button>
+        </div>
+    </div>
     <div class="scores-board d-none">
-        <img class="scores-image align-self-center d-block m-2" src="./public/img/minesweeper_logo.png" width="200"
+        <img class="scores-image align-self-center d-block m-2" src="./public/img/minesweeper_logo.png" alt="logo du jeu" width="200"
              alt="Petit personnage triste car jeu perdu">
         <div>
             <div class="scores-text my-3 text-white d-flex flex-column w-75 mx-auto gap-3">
