@@ -90,7 +90,7 @@ li {
 }
 
 /* TABLEAU DES SCORES DES PARTIES */
-.scores-board, .rules-board {
+.scores-board, .rules-board{
     display: flex;
     flex-direction: column;
     position: absolute;
