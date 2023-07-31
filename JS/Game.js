@@ -130,21 +130,7 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/alien.png';
                 resultText.innerText = `PERDU: VOUS FEREZ MIEUX LA PROCHAINE FOIS ${pseudo.value.toUpperCase()} ...`;
                 gridArea.style.pointerEvents = 'none';
-                restartButton.addEventListener('click', () => {
-                    gridArea.style.pointerEvents = 'auto';
-                    gridArea.classList.remove('d-flex');
-                    gridArea.classList.add('d-none');
-                    formArea.classList.remove('d-none');
-                    formArea.classList.add('d-block');
-                    resultBoard.classList.remove('d-flex');
-                    resultBoard.classList.add('d-none');
-                    title.classList.remove('d-block');
-                    title.classList.add('d-none');
-                    while (gridArea.hasChildNodes()) {
-                        gridArea.removeChild(gridArea.firstChild);
-                    }
-
-                });
+                Game.restartGame();
             }
             if (bool == true && result == 'victory') {
                 resultBoard.classList.remove('d-none');
@@ -152,24 +138,26 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/happy.png';
                 resultText.innerText = `BRAVO ${pseudo.value.toUpperCase()} VOUS ETES TROP FORT !`;
                 gridArea.style.pointerEvents = 'none';
-                restartButton.addEventListener('click', () => {
-                    gridArea.style.pointerEvents = 'auto';
-                    gridArea.classList.remove('d-flex');
-                    gridArea.classList.add('d-none');
-                    formArea.classList.remove('d-none');
-                    formArea.classList.add('d-block');
-                    resultBoard.classList.remove('d-flex');
-                    resultBoard.classList.add('d-none');
-                    title.classList.remove('d-block');
-                    title.classList.add('d-none');
-                    // pour supprimer les enfants de la grille précédente
-                    while (gridArea.hasChildNodes()) {
-                        gridArea.removeChild(gridArea.firstChild);
-                    }
-                });
+                Game.restartGame();
             }
         }
 
+        static restartGame() {
+            restartButton.addEventListener('click', () => {
+                gridArea.style.pointerEvents = 'auto';
+                gridArea.classList.remove('d-flex');
+                gridArea.classList.add('d-none');
+                formArea.classList.remove('d-none');
+                formArea.classList.add('d-block');
+                resultBoard.classList.remove('d-flex');
+                resultBoard.classList.add('d-none');
+                title.classList.remove('d-block');
+                title.classList.add('d-none');
+                while (gridArea.hasChildNodes()) {
+                    gridArea.removeChild(gridArea.firstChild);
+                }
+            });
+        }
         static checkForm() {
             let errors = [];
             let regexp = new RegExp('^[a-zA-Z0-9]{3,20}$', 'g');
