@@ -130,6 +130,10 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/alien.png';
                 resultText.innerText = `PERDU: VOUS FEREZ MIEUX LA PROCHAINE FOIS ${pseudo.value.toUpperCase()} ...`;
                 gridArea.style.pointerEvents = 'none';
+                let partyNbrTmp = parseInt(localStorage.getItem('tryNumber')) + 1;
+                localStorage.setItem('tryNumber', partyNbrTmp.toString());
+                let loseNumberIncrease = parseInt(localStorage.getItem('loseNumber')) + 1;
+                localStorage.setItem('loseNumber', loseNumberIncrease.toString());
                 Game.restartGame();
             }
             if (bool == true && result == 'victory') {
@@ -138,6 +142,10 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/happy.png';
                 resultText.innerText = `BRAVO ${pseudo.value.toUpperCase()} VOUS ETES TROP FORT !`;
                 gridArea.style.pointerEvents = 'none';
+                let partyNbrTmp = parseInt(localStorage.getItem('tryNumber')) + 1;
+                localStorage.setItem('tryNumber', partyNbrTmp.toString());
+                let winNumberIncrease = parseInt(localStorage.getItem('winNumber')) + 1;
+                localStorage.setItem('winNumber', winNumberIncrease.toString());
                 Game.restartGame();
             }
         }
@@ -158,29 +166,33 @@ window.addEventListener('load', () => {
                 }
             });
         }
+
         static checkForm() {
             let errors = [];
             let regexp = new RegExp('^[a-zA-Z0-9]{3,20}$', 'g');
 
-            if (pseudo.value == '' || pseudo.value.length < 3 || pseudo.value.length > 20){
+            if (pseudo.value == '' || pseudo.value.length < 3 || pseudo.value.length > 20) {
                 errors.push('pseudoTaille');
             }
-            if (!regexp.test(pseudo.value)){
+            if (!regexp.test(pseudo.value)) {
                 errors.push('pseudoFormat')
             }
-            if (rows.value > 100){
+            if (rows.value > 100) {
                 errors.push('rowMaxLength');
             }
-            if (cols.value > 100){
+            if (cols.value > 100) {
                 errors.push('colMaxLength');
             }
-            if (mines.value > (rows.value * cols.value) - 1){
+            if (mines.value > (rows.value * cols.value) - 1) {
                 errors.push('minesNumber');
             }
             return errors;
         }
     }
 
+    localStorage.setItem('tryNumber', '0');
+    localStorage.setItem('loseNumber', '0');
+    localStorage.setItem('winNumber', '0');
     // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {
         const errorsBoard = document.querySelector('.errors-board');
@@ -191,8 +203,8 @@ window.addEventListener('load', () => {
         errorsList = Game.checkForm();
         if (errorsList.length == 0) {
             // CREATION DU JEU
-            let game = new Game(rows.value, cols.value, mines.value);
             localStorage.setItem('pseudo', pseudo.value);
+            let game = new Game(rows.value, cols.value, mines.value);
 
             // RECUPERATION DES DATAS EN SE CONNECTANT A l'API
             let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
@@ -266,23 +278,23 @@ window.addEventListener('load', () => {
 
     //INTERACTIONS AVEC BOUTTON SCORES
     scoresButton.addEventListener('click', () => {
-        let player = new Player(pseudo.value, 1, 0, 0);
+        let player = new Player(
+            localStorage.getItem('pseudo'),
+            localStorage.getItem('tryNumber'),
+            localStorage.getItem('loseNumber'),
+            localStorage.getItem('winNumber')
+        );
+
         const scoresPseudo = document.querySelector('.scores-pseudo');
         const scoresTry = document.querySelector('.scores-try');
         const scoresLose = document.querySelector('.scores-lose');
         const scoresWin = document.querySelector('.scores-win');
 
-        // localStorage.setItem('pseudo', player.pseudo);
-        localStorage.setItem('tryNumber', player.tryNumber);
-        localStorage.setItem('loseNumber', player.loseNumber);
-        localStorage.setItem('winNumber', player.winNumber);
-
         player.showScores(scoresBoard);
-        scoresPseudo.textContent = scoresPseudo.textContent + localStorage.getItem('pseudo');
-        scoresTry.textContent = scoresTry.textContent + localStorage.getItem('tryNumber');
-        scoresLose.textContent = scoresLose.textContent + localStorage.getItem('loseNumber');
-        scoresWin.textContent = scoresWin.textContent + localStorage.getItem('winNumber');
-        scoresClose.addEventListener('click', () => {
+            scoresPseudo.innerText = localStorage.getItem('pseudo').toUpperCase();            scoresTry.innerText = localStorage.getItem('tryNumber');
+            scoresLose.innerText = localStorage.getItem('loseNumber');
+            scoresWin.innerText = localStorage.getItem('winNumber');
+            scoresClose.addEventListener('click', () => {
             player.closeBoard();
         });
     });
