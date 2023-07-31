@@ -23,6 +23,7 @@ window.addEventListener('load', () => {
     const rulesButton = document.querySelector('.rules-button');
     const rulesBoard = document.querySelector('.rules-board');
     const rulesCloseButton = document.querySelector('.close-rules-button');
+    const scoresSave = document.querySelector('.scores-save');
     let GAMEOVER = false;
     let RESULT;
 
@@ -130,10 +131,10 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/alien.png';
                 resultText.innerText = `PERDU: VOUS FEREZ MIEUX LA PROCHAINE FOIS ${pseudo.value.toUpperCase()} ...`;
                 gridArea.style.pointerEvents = 'none';
-                let partyNbrTmp = parseInt(localStorage.getItem('tryNumber')) + 1;
-                localStorage.setItem('tryNumber', partyNbrTmp.toString());
-                let loseNumberIncrease = parseInt(localStorage.getItem('loseNumber')) + 1;
-                localStorage.setItem('loseNumber', loseNumberIncrease.toString());
+                let partyNbrTmp = parseInt(sessionStorage.getItem('tryNumber')) + 1;
+                sessionStorage.setItem('tryNumber', partyNbrTmp.toString());
+                let loseNumberIncrease = parseInt(sessionStorage.getItem('loseNumber')) + 1;
+                sessionStorage.setItem('loseNumber', loseNumberIncrease.toString());
                 Game.restartGame();
             }
             if (bool == true && result == 'victory') {
@@ -142,10 +143,10 @@ window.addEventListener('load', () => {
                 resultImage.src = './public/img/happy.png';
                 resultText.innerText = `BRAVO ${pseudo.value.toUpperCase()} VOUS ETES TROP FORT !`;
                 gridArea.style.pointerEvents = 'none';
-                let partyNbrTmp = parseInt(localStorage.getItem('tryNumber')) + 1;
-                localStorage.setItem('tryNumber', partyNbrTmp.toString());
-                let winNumberIncrease = parseInt(localStorage.getItem('winNumber')) + 1;
-                localStorage.setItem('winNumber', winNumberIncrease.toString());
+                let partyNbrTmp = parseInt(sessionStorage.getItem('tryNumber')) + 1;
+                sessionStorage.setItem('tryNumber', partyNbrTmp.toString());
+                let winNumberIncrease = parseInt(sessionStorage.getItem('winNumber')) + 1;
+                sessionStorage.setItem('winNumber', winNumberIncrease.toString());
                 Game.restartGame();
             }
         }
@@ -190,9 +191,11 @@ window.addEventListener('load', () => {
         }
     }
 
-    localStorage.setItem('tryNumber', '0');
-    localStorage.setItem('loseNumber', '0');
-    localStorage.setItem('winNumber', '0');
+    sessionStorage.setItem('tryNumber', '0');
+    sessionStorage.setItem('loseNumber', '0');
+    sessionStorage.setItem('winNumber', '0');
+    // sessionStorage.clear();
+
     // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {
         const errorsBoard = document.querySelector('.errors-board');
@@ -203,8 +206,9 @@ window.addEventListener('load', () => {
         errorsList = Game.checkForm();
         if (errorsList.length == 0) {
             // CREATION DU JEU
-            localStorage.setItem('pseudo', pseudo.value);
+            sessionStorage.setItem('pseudo', pseudo.value);
             let game = new Game(rows.value, cols.value, mines.value);
+            Tools.showScoreLine();
 
             // RECUPERATION DES DATAS EN SE CONNECTANT A l'API
             let gameDatas = await game.getDatas(`https://minesweeper.js.apprendre-est.fun/generate_grid.php?
@@ -213,7 +217,7 @@ window.addEventListener('load', () => {
             formArea.classList.add('d-none');
             title.classList.remove('d-none');
             title.classList.add('d-block');
-            title.innerText = `Bienvenue ${localStorage.getItem('pseudo').toUpperCase()}`;
+            title.innerText = `Bienvenue ${sessionStorage.getItem('pseudo').toUpperCase()}`;
             gridArea.classList.remove('d-none');
             gridArea.classList.add('d-flex');
 
@@ -279,10 +283,10 @@ window.addEventListener('load', () => {
     //INTERACTIONS AVEC BOUTTON SCORES
     scoresButton.addEventListener('click', () => {
         let player = new Player(
-            localStorage.getItem('pseudo'),
-            localStorage.getItem('tryNumber'),
-            localStorage.getItem('loseNumber'),
-            localStorage.getItem('winNumber')
+            sessionStorage.getItem('pseudo'),
+            sessionStorage.getItem('tryNumber'),
+            sessionStorage.getItem('loseNumber'),
+            sessionStorage.getItem('winNumber')
         );
 
         const scoresPseudo = document.querySelector('.scores-pseudo');
@@ -291,11 +295,12 @@ window.addEventListener('load', () => {
         const scoresWin = document.querySelector('.scores-win');
 
         player.showScores(scoresBoard);
-            scoresPseudo.innerText = localStorage.getItem('pseudo').toUpperCase();            scoresTry.innerText = localStorage.getItem('tryNumber');
-            scoresLose.innerText = localStorage.getItem('loseNumber');
-            scoresWin.innerText = localStorage.getItem('winNumber');
-            scoresClose.addEventListener('click', () => {
-            player.closeBoard();
+        scoresPseudo.innerText = sessionStorage.getItem('pseudo').toUpperCase();
+        scoresTry.innerText = sessionStorage.getItem('tryNumber');
+        scoresLose.innerText = sessionStorage.getItem('loseNumber');
+        scoresWin.innerText = sessionStorage.getItem('winNumber');
+        scoresClose.addEventListener('click', () => {
+        player.closeBoard();
         });
     });
 
@@ -308,4 +313,11 @@ window.addEventListener('load', () => {
             rulesBoard.classList.add('d-none');
         });
     });
+
+    //INTERACTIONS AVEC BOUTTON SAUVEGARDE SCORES
+
+    scoresSave.addEventListener('click', () => {
+        Tools.createScoreLine();
+    });
+
 });

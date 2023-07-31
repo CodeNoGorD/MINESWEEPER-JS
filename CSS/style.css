@@ -132,7 +132,7 @@ li {
     border: 5px solid white;
     transform: translateY(2px);
 }
-.scores-close{
+.scores-close, .scores-save{
     padding: 0.5em;
     display: block;
     margin: 0.5rem auto;
@@ -144,7 +144,10 @@ li {
     transition: all 0.5s;
     font-size: 1.2rem;
 }
-.scores-close:hover{
+.scores-save {
+    background: #1e6e7f;
+}
+.scores-close:hover, .scores-save:hover{
     border: 5px solid white;
     transform: translateY(2px);
 }

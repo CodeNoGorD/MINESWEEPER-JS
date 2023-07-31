@@ -100,7 +100,7 @@ export class Tools {
     static fillDatas(datas, nbRows, nbCols) {
         datas.forEach((row, rowIndex) => {
             row.forEach((col, colIndex) => {
-                if (col != - 1) {
+                if (col != -1) {
                     let nbrMines = Tools.checkMines(datas, rowIndex, colIndex, nbRows, nbCols);
                     if (nbrMines > 0) {
                         datas[rowIndex][colIndex] += nbrMines;
@@ -137,14 +137,14 @@ export class Tools {
         errorsBoard.append(message);
     }
 
-    static showErrors (arr) {
+    static showErrors(arr) {
         let messages = {
             pseudoTaille: 'Veuillez saisir un pseudo de minimum 3 caractères et max 20',
             pseudoFormat: 'Veuillez ne saisir que des caractères de a à z en minuscule ou majuscule et des nombres de 0 à 9',
             rowMaxLength: 'Merci de saisir un nombre de lignes inférieur ou égal à 100',
             colMaxLength: 'Merci de saisir un nombre de colonnes inférieur ou égal à 100',
             minesNumber: 'Merci de saisir un nombre de mines raisonnable sinon ca va être compliqué 😊',
-    };
+        };
         arr.forEach((row) => {
             switch (row) {
                 case 'pseudoTaille':
@@ -166,5 +166,40 @@ export class Tools {
                     console.log('Cela ne marche pas');
             }
         });
+    }
+
+    static createScoreLine() {
+        const tableScores = document.querySelector('.table-scores');
+        let pseudo = sessionStorage.getItem('pseudo');
+        let tryNbr = sessionStorage.getItem('tryNumber');
+        let loseNbr= sessionStorage.getItem('loseNumber');
+        let winNbr = sessionStorage.getItem('winNumber');
+
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${pseudo}</td>
+                        <td>${tryNbr}</td>
+                        <td>${loseNbr}</td>
+                        <td>${winNbr}</td>`;
+        tableScores.appendChild(tr);
+        localStorage.setItem('pseudo', pseudo);
+        localStorage.setItem('tryNumber', tryNbr);
+        localStorage.setItem('loseNumber', loseNbr);
+        localStorage.setItem('winNumber', winNbr);
+    }
+    static showScoreLine() {
+        const tableScores = document.querySelector('.table-scores');
+        let pseudo = localStorage.getItem('pseudo');
+        let tryNbr = localStorage.getItem('tryNumber');
+        let loseNbr= localStorage.getItem('loseNumber');
+        let winNbr = localStorage.getItem('winNumber');
+
+        if (pseudo != sessionStorage.getItem('pseudo') && tryNbr > 0) {
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${pseudo}</td>
+                        <td>${tryNbr}</td>
+                        <td>${loseNbr}</td>
+                        <td>${winNbr}</td>`;
+            tableScores.appendChild(tr);
+        }
     }
 }
