@@ -281,7 +281,7 @@ window.addEventListener('load', () => {
         }
     });
 
-    //INTERACTIONS AVEC BOUTTON SCORES
+    //INTERACTIONS AVEC BOUTON SCORES
     scoresButton.addEventListener('click', () => {
         let player = new Player(
             sessionStorage.getItem('pseudo'),
@@ -305,7 +305,7 @@ window.addEventListener('load', () => {
         });
     });
 
-    //INTERACTIONS AVEC BOUTTON REGLES
+    //INTERACTIONS AVEC BOUTON REGLES
     rulesButton.addEventListener('click', () => {
         rulesBoard.classList.remove('d-none');
         rulesBoard.classList.add('d-flex');
@@ -315,7 +315,7 @@ window.addEventListener('load', () => {
         });
     });
 
-    //INTERACTIONS AVEC BOUTTON SAUVEGARDE SCORES
+    //INTERACTIONS AVEC BOUTON SAUVEGARDE SCORES
 
     scoresSave.addEventListener('click', () => {
         Tools.createScoreLine();

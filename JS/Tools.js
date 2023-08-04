@@ -175,12 +175,23 @@ export class Tools {
         let loseNbr= sessionStorage.getItem('loseNumber');
         let winNbr = sessionStorage.getItem('winNumber');
 
-        let tr = document.createElement('tr');
-        tr.innerHTML = `<td>${pseudo}</td>
+        // if (pseudo != localStorage.getItem('pseudo')) {
+            let tr = document.createElement('tr');
+
+            tr.innerHTML = `<td>${pseudo}</td>
                         <td>${tryNbr}</td>
                         <td>${loseNbr}</td>
                         <td>${winNbr}</td>`;
-        tableScores.appendChild(tr);
+            tableScores.appendChild(tr);
+        // } else {
+        //     const line = document.querySelector('.line');
+        //     line.innerHTML = `<td>${pseudo}</td>
+        //                 <td>${tryNbr}</td>
+        //                 <td>${loseNbr}</td>
+        //                 <td>${winNbr}</td>`;
+        //     tableScores.appendChild(line);
+        // }
+
         localStorage.setItem('pseudo', pseudo);
         localStorage.setItem('tryNumber', tryNbr);
         localStorage.setItem('loseNumber', loseNbr);
@@ -199,6 +210,7 @@ export class Tools {
                         <td>${tryNbr}</td>
                         <td>${loseNbr}</td>
                         <td>${winNbr}</td>`;
+            tr.classList.add('line');
             tableScores.appendChild(tr);
         }
     }
