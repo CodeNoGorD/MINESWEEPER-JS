@@ -195,6 +195,7 @@ window.addEventListener('load', () => {
     sessionStorage.setItem('loseNumber', '0');
     sessionStorage.setItem('winNumber', '0');
     // sessionStorage.clear();
+    // localStorage.clear();
 
     // VALIDATION DU FORMULAIRE ET DEMARRAGE DU JEU
     btnStart.addEventListener('click', async (e) => {

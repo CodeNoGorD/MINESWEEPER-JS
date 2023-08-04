@@ -26,7 +26,7 @@ et de mines.
 3. Création d'une instance **game** puis connexion à l'API pour réception du tableau
 de données dès qu'on clique sur le bouton start en addEventListener.
 4. Fonction utilitaire pour inverser le signe **reverseSign()** des nombres du tableau pour que les mines
-soient affichées avec un '-1' pour limiter les conflits lors de l'incrementation des cases adjacentes.
+soient affichées avec un '-1' pour limiter les conflits lors de l'incrémentation des cases adjacentes.
 5. Fonction utilitaire **fillDatas()** qui remplit le tableau avec les valeurs autours des mines
 dans tout le tableau en s'appuyant sur la fonction utilitaire **checkMines()**.
 On va passer dans chaque case du tableau et vérifier dans les 8 cases autour le nombre de bombes et 
@@ -44,8 +44,9 @@ Ensuite, nous avons plusieurs addEventListeners pour les interactions avec :
 
 --------------------------------------------------------
 7. addEventListener GridArea clic gauche : Gestion de l'affichage de la case avec le déclenchement
-des conditions de victoire ou de défaite **Game.endGame()** et la prise en charge du clic gauche bloqué sur les cases 
-avec un drapeau.
+des conditions de victoire ou de défaite **Game.endGame()** et la possibilité de redémarrer le jeu
+avec un addEventListener **Game.restartGame()**  / Gestion également de la prise en charge du 
+clic gauche bloqué sur les cases avec un drapeau.
 8. addEventListener GridArea clic droit : Gestion de l'affichage des cases drapeau classe **'flag'**.
 9. addEventListener pour le bouton des scores : Gestion d'un tableau de scores avec une logique d'afficher 
 les résultats des parties en cours et d'utiliser pour cela des valeurs en sessionStorage.
